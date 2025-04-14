@@ -1,36 +1,65 @@
-Timer timer = new Timer();
-timer.scheduleAtFixedRate(new TimerTask() {
-    @Override
-    public void run() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // Get current time in Asia/Kolkata timezone
-                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Kolkata"));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Result</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      width: 200px;
+    }
+    .label {
+      font-size: 18px;
+      margin-top: 20px;
+      color: hotpink;
+    }
+    #result {
+      font-size: 24px;
+      margin-top: 20px;
+      color: cyan;
+    }
+    #timer {
+      font-size: 20px;
+      margin-top: 15px;
+      color: yellow;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      background-color: hotpink;
+      border: none;
+      cursor: pointer;
+      color: black;
+    }
+  </style>
+</head>
+<body>
 
-                // Seconds remaining in the current minute
-                int seconds = calendar.get(Calendar.SECOND);
-                int remainingSeconds = 60 - seconds;
+  <div class="label">PREM PATEL</div>
+  <input type="number" id="premInput" placeholder="Enter value for PREM PATEL">
 
-                // Current hour and minute
-                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                int currentMinute = calendar.get(Calendar.MINUTE);
+  <div class="label">SERVER 2</div>
+  <input type="number" id="serverInput" placeholder="Enter value for SERVER 2">
 
-                // Start time: 5:29 AM
-                int startHour = 5;
-                int startMinute = 29;
+  <div id="timer">Timer: 30s</div>
 
-                // Calculate total minutes since 5:29 AM
-                int elapsedMinutes = (currentHour * 60 + currentMinute) - (startHour * 60 + startMinute);
-                if (elapsedMinutes < 0) {
-                    elapsedMinutes = 0;
-                }
+  <button onclick="startTimer()">Start 30s Timer</button>
 
-                // Format date and period number
-                String formattedDate = new SimpleDateFormat("yyyyMMdd", Locale.getDefault())
-                        .format(calendar.getTime());
+  <div id="result">Result: </div>
 
-                String periodNumber = String.format("100001%04d", elapsedMinutes);
+  <script>
+    let countdown;
+    let timeLeft = 30;
 
-                // Update TextView1 with the formatted period
-                textView1.setText(formattedDate + periodNumber);
+    function startTimer() {
+      clearInterval
